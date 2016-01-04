@@ -25,16 +25,33 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', 
 function(req, res) {
+  if (true) {
+    console.log('\n\n\nShortly.js: res.req.path', res.req.path)
+    res.redirect('/login');
+  }
   res.render('index');
+});
+
+app.get('/login', 
+function(req, res) {
+  res.render('login');
 });
 
 app.get('/create', 
 function(req, res) {
+  if (true) {
+    console.log('\n\n\nShortly.js: res.req.path', res.req.path)
+    res.redirect('/login');
+  }
   res.render('index');
 });
 
 app.get('/links', 
 function(req, res) {
+  if (true) {
+    console.log('\n\n\nShortly.js: res.req.path', res.req.path)
+    res.redirect('/login');
+  }
   Links.reset().fetch().then(function(links) {
     res.send(200, links.models);
   });

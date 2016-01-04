@@ -67,6 +67,7 @@ describe('', function() {
         // };
       });
   });
+}); // added to close first describe
 
   describe('Link creation:', function(){
 
@@ -92,7 +93,6 @@ var xbeforeEach = function(){};
           done();
         });
       });
-    });
 
     it('Only shortens valid urls, returning a 404 - Not found for invalid urls', function(done) {
       var options = {
@@ -109,9 +109,10 @@ var xbeforeEach = function(){};
         done();
       });
     });
+  }); // link creation we made 
 
     describe('Shortening links:', function(){
-
+      var requestWithSession = request.defaults({jar: true}); // we added this
       var options = {
         'method': 'POST',
         'followAllRedirects': true,
@@ -162,6 +163,7 @@ var xbeforeEach = function(){};
     describe('With previously saved urls:', function(){
 
       var link;
+      var requestWithSession = request.defaults({jar: true});
 
       beforeEach(function(done){
         // save a link to the database
@@ -220,9 +222,9 @@ var xbeforeEach = function(){};
 
     }); // 'With previously saved urls'
 
-  }); // 'Link creation'
+  // }); // 'Link creation'
 
-  xdescribe('Privileged Access:', function(){
+  describe('Privileged Access:', function(){
 
     it('Redirects to login page if a user tries to access the main page and is not signed in', function(done) {
       request('http://127.0.0.1:4568/', function(error, res, body) {
@@ -342,4 +344,4 @@ var xbeforeEach = function(){};
 
   }); // 'Account Login'
 
-});
+// });
