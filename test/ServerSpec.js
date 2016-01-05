@@ -268,6 +268,7 @@ describe('', function() {
           .then(function(res) {
             if (res[0] && res[0]['username']) {
               var user = res[0]['username'];
+              console.log('spec found user ')
             }
             expect(user).to.equal('Svnh');
             done();

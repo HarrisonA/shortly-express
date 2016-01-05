@@ -122,34 +122,38 @@ app.post('/login', function(req, res) {
     console.log("\n\n\n\n model found: ", user.attributes);
   }
 
-
 if (isNew){
-  // add new user and send to "/"
-  console.log('newUser created')
-  Users.add(new User(req.body));
-  app.auth = true;
-  res.redirect('/');
-
-
+  // add new user and send to "/signup"
+  res.redirect('/signup');
 }
-
   console.log('-----------------------------------------', Users.length)
-/*
-  Loop to check the users
-  var myModel;
-
-  for(var i=0; i<Users.length; i++) {
-    myModel = Users.models[i];
-    console.log("\n\n\n\n model found: ", myModel);
-    }
-
-*/
 });
 
-app.get('/login', 
-function(req, res) {
+app.get('/login', function(req, res) {
   res.render('login');
 });
+
+app.get('/logout', function(req, res) {
+  app.auth = false;
+  res.redirect('/');
+});
+
+app.get('/signup', function(req, res) {
+  res.render('signup');
+});
+
+app.post('/signup', function (req, res) {
+  console.log('newUser created');
+  var user = new User(req.body);
+  Users.add(user);
+  app.auth = true;
+  user.save().then(function (newUser) {
+      Users.add(newUser);
+      res.redirect("/");
+    });
+  })
+
+
 
 /************************************************************/
 // Handle the wildcard route last - if all other routes fail
