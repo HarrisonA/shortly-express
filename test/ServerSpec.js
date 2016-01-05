@@ -69,11 +69,11 @@ describe('', function() {
   });
 }); // added to close first describe
 
-  describe('Link creation:', function(){
-
+  xdescribe('Link creation:', function(){
     var requestWithSession = request.defaults({jar: true});
 
-var xbeforeEach = function(){};
+    beforeEach (function(){
+
       // create a user that we can then log-in with
       new User({
           'username': 'Phillip',
@@ -109,9 +109,10 @@ var xbeforeEach = function(){};
         done();
       });
     });
+   });
   }); // link creation we made 
 
-    describe('Shortening links:', function(){
+    xdescribe('Shortening links:', function(){
       var requestWithSession = request.defaults({jar: true}); // we added this
       var options = {
         'method': 'POST',
@@ -160,7 +161,7 @@ var xbeforeEach = function(){};
 
     }); // 'Shortening links'
 
-    describe('With previously saved urls:', function(){
+    xdescribe('With previously saved urls:', function(){
 
       var link;
       var requestWithSession = request.defaults({jar: true});
@@ -224,7 +225,7 @@ var xbeforeEach = function(){};
 
   // }); // 'Link creation'
 
-  describe('Privileged Access:', function(){
+  xdescribe('Privileged Access:', function(){
 
     it('Redirects to login page if a user tries to access the main page and is not signed in', function(done) {
       request('http://127.0.0.1:4568/', function(error, res, body) {
@@ -249,7 +250,7 @@ var xbeforeEach = function(){};
 
   }); // 'Priviledged Access'
 
-  xdescribe('Account Creation:', function(){
+  describe('Account Creation:', function(){
 
     it('Signup creates a user record', function(done) {
       var options = {
