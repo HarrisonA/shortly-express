@@ -26,7 +26,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.auth = false;  // default authorization
 
-app.get('/', 
+app.get('/',
 function(req, res) {
   if (app.auth === false) {
     console.log('\n\n\nShortly.js: res.req.path', res.req.path)
@@ -47,10 +47,7 @@ function(req, res) {
 
 app.get('/links', 
 function(req, res) {
-  if (app.auth === false) {
-    console.log('\n\n\nShortly.js: res.req.path', res.req.path)
-    res.redirect('/login');
-  }
+ 
   Links.reset().fetch().then(function(links) {
     res.send(200, links.models);
   });
@@ -99,33 +96,25 @@ app.post('/login', function(req, res) {
 
   var user;
   var isNew = true;
-  // loop through every user.  
-  for(var i=0; i<Users.length; i++) {
-    //check if the user matches the input user.
-    user = Users.models[i];
-    if (user.get('username') === req.body.username) {
-      isNew = false;
-      console.log('user exists in db');
-    //check password 
-      if (user.get('password') === req.body.password) {
-      // if pass is correct route to "/"
-        console.log('password match');
-        app.auth = true;
-        res.redirect('/');
+  // loop through evry user.  
+  
+  new User(req.body).fetch()   // create a new  (bookshelf) user and attempt to fetch it from the database
+  .then(function(found) {  // 
+    if (found) {
+      app.auth = true;
+      res.redirect('/');
+    } else {
+      app.auth = false;
+      res.redirect('/login');
 
-      // else pass is incorect 
-      } else {
-      // alert bad pass
-        console.log('bad password');
-      }
     }
-    console.log("\n\n\n\n model found: ", user.attributes);
-  }
+  })
 
-if (isNew){
-  // add new user and send to "/signup"
-  res.redirect('/signup');
-}
+
+// if (isNew){
+//   // add new user and send to "/signup"
+//   res.redirect('/signup');
+// }
   console.log('-----------------------------------------', Users.length)
 });
 
